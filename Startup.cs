@@ -70,8 +70,10 @@ namespace WebApplication1
                         ValidateIssuerSigningKey= true
                     };
             });
+            // services.AddDbContext<ApiAppContext>(options =>
+            //     options.UseInMemoryDatabase("AppDB"));
             services.AddDbContext<ApiAppContext>(options =>
-                options.UseInMemoryDatabase("AppDB"));
+                options.UseSqlServer(@"Data Source=DESKTOP-FV5LUU9\SQLEXPRESS;Initial Catalog=EDteamApi;Integrated Security=SSPI;"));
         
         }
 

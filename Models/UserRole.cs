@@ -11,6 +11,8 @@ namespace WebApiRoutesResponses.Models
         public Guid userRoleId{get;set;} = Guid.NewGuid();
 
         public string role{set;get;}
+
+        public string description{set;get;}
         public Guid userId{get;set;}
 
         [JsonIgnore]

@@ -13,6 +13,7 @@ namespace WebApiRoutesResponses.Models
 
         public string lastName {get;set;}
 
+        public string phone{get;set;}
         public DateTime dateCreated{get;set;} = DateTime.Now;
 
         public bool active {get;set;} = true;
