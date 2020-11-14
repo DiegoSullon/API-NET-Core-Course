@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>API</title>
+</head>
+
+<body>
+    <div id="div">
+
+    </div>
+    <script>
+        axios.defaults.headers.common = {
+            ...axios.defaults.headers.common,
+            'Access-Control-Allow-Origin': 'https://127.0.0.1:5001/',
+            "Content-Type": 'application/json'
+        };
+        axios.get('http://localhost:5000/api/user/getvalues')
+            .then((response) => {
+                document.getElementById("div").innerHTML = response.data;
+            }, (error) => {
+                document.getElementById("div").innerHTML = response;
+            });
+    </script>
+</body>
+
+</html>
