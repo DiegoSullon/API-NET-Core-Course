@@ -74,7 +74,7 @@ namespace WebApplication1
             //     options.UseInMemoryDatabase("AppDB"));
             services.AddDbContext<ApiAppContext>(options =>
                 options.UseSqlServer(@"Data Source=DESKTOP-FV5LUU9\SQLEXPRESS;Initial Catalog=EDteamApi;Integrated Security=SSPI;"));
-        
+            services.AddResponseCaching();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,6 +98,8 @@ namespace WebApplication1
             // });
 
             app.UseRouting();
+
+            app.UseResponseCaching();
 
             app.UseCors();
 

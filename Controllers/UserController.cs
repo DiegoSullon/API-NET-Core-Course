@@ -30,6 +30,7 @@ namespace WebApplication1.Controllers
 
         // GET: api/<controller>
         [HttpGet]
+        [ResponseCache(Duration=60)]
         public ActionResult<IEnumerable<User>> Get()
         {
             return apiContext.users.Include(p=>p.userRole).ToList();
