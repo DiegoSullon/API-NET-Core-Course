@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace WebApplication1.Services
+namespace WebApiRoutesResponses.Services
 {
     public interface IUserDataService
     {

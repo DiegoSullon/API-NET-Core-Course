@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApplication1.Services;
+using WebApiRoutesResponses.Services;
 using WebApiRoutesResponses.MiddleWares;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-
-
+using WebApiRoutesResponses.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1
 {
@@ -26,7 +26,16 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(config =>
+            {
+                config.EnableEndpointRouting = false;
+                //var policy = new AuthorizationPolicyBuilder()
+                //                .RequireAuthenticatedUser()
+                //                .Build();
+                //config.Filters.Add(new AuthorizeFilter(policy));
+            }).AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             // services.AddScoped<IUserDataService,UserDataService>();//nuueva instancia por cada request
             // services.AddSingleton<IUserDataService,UserDataService>();//única instancia
             services.AddTransient<IUserDataService, UserDataService>();//nueva instancia por cada inyeccion de dependencia
@@ -60,7 +69,10 @@ namespace WebApplication1
                         ValidateIssuer = false,
                         ValidateIssuerSigningKey= true
                     };
-            });  
+            });
+            services.AddDbContext<ApiAppContext>(options =>
+                options.UseInMemoryDatabase("AppDB"));
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
