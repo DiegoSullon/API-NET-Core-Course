@@ -5,6 +5,9 @@
     <UserSecretsId>7b1dfeae-6a72-4574-8134-163f09d48372</UserSecretsId>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <IncludeOpenAPIAnalyzer>True</IncludeOpenAPIAnalyzer>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +22,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.1" />
   </ItemGroup>
 
 

@@ -10,3 +10,4 @@ dotnet ef migrations add InitialCreate
 dotnet tool install --global dotnet-ef
 ef sql server
 dotnet ef database update
+Swashbuckle.AspNetCore.Swagger 
