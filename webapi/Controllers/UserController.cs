@@ -31,10 +31,10 @@ namespace WebApplication1.Controllers
 
         [HttpGet]
         [EnableQuery()]
-        public ActionResult<IEnumerable<User>> Get()
+        public IEnumerable<User> Get()
         {
             //return Ok(apiContext.users.Where(p => p.active).ToList());
-            return Ok(apiContext.users.Include(p => p.userRole).ToList());
+            return apiContext.users.Include(p => p.userRole).ToList();
         }
 
 
