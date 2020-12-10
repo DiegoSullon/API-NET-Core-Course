@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -28,13 +29,22 @@ namespace WebApplication1.Controllers
             apiContext.Database.EnsureCreated();
         }
 
+        [HttpGet]
+        [EnableQuery()]
+        public ActionResult<IEnumerable<User>> Get()
+        {
+            //return Ok(apiContext.users.Where(p => p.active).ToList());
+            return Ok(apiContext.users.Include(p => p.userRole).ToList());
+        }
+
 
         // GET: api/<controller>
         [HttpGet]
-        [ResponseCache(Duration=60)]
-        public ActionResult<IEnumerable<User>> Get()
+        [Route("GetUsers")]
+        [ResponseCache(Duration = 60)]
+        public ActionResult<IEnumerable<User>> GetUsers()
         {
-            return apiContext.users.Include(p=>p.userRole).ToList();
+            return apiContext.users.Include(p => p.userRole).ToList();
         }
         [HttpGet]
         [Route("GetRoles")]
@@ -88,11 +98,11 @@ namespace WebApplication1.Controllers
             Guid.TryParse(id, out var userId);
             if (userId != Guid.Empty)
             {
-                var userFound = apiContext.users.FirstOrDefault(p=>p.userId==userId);
+                var userFound = apiContext.users.FirstOrDefault(p => p.userId == userId);
                 if (userFound != null)
                 {
                     userFound.name = value.name;
-                    userFound.lastName=value.lastName;
+                    userFound.lastName = value.lastName;
                     userFound.active = value.active;
                     await apiContext.SaveChangesAsync();
 
@@ -107,7 +117,7 @@ namespace WebApplication1.Controllers
             Guid.TryParse(id, out var userId);
             if (userId != Guid.Empty)
             {
-                var userFound = apiContext.users.FirstOrDefault(p=>p.userId==userId);
+                var userFound = apiContext.users.FirstOrDefault(p => p.userId == userId);
                 apiContext.users.Remove(userFound);
                 await apiContext.SaveChangesAsync();
             }

@@ -13,6 +13,10 @@ using WebApiRoutesResponses.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.OData.Edm;
+using Microsoft.AspNet.OData.Builder;
+using WebApiRoutesResponses.Models;
 
 namespace WebApplication1
 {
@@ -30,7 +34,7 @@ namespace WebApplication1
         {
             services.AddControllers(config =>
             {
-                config.EnableEndpointRouting = false;
+                config.EnableEndpointRouting = false;//odata
                 //var policy = new AuthorizationPolicyBuilder()
                 //                .RequireAuthenticatedUser()
                 //                .Build();
@@ -98,6 +102,8 @@ namespace WebApplication1
                     }
                 });
             });
+
+            services.AddOData();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -143,20 +149,32 @@ namespace WebApplication1
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-
-                endpoints.MapGet("/myroot", async context =>
-                {
-                    await context.Response.WriteAsync("Holaa desde my root");
-                });
+            app.UseMvc(routeBuilder =>{
+                routeBuilder.Expand().Select().OrderBy().Filter();
+                routeBuilder.EnableDependencyInjection();
+                routeBuilder.MapODataServiceRoute("odata","odata",GetEdmModel());
             });
+
+            // app.UseEndpoints(endpoints =>
+            // {
+            //     endpoints.MapControllers();
+
+            //     endpoints.MapGet("/myroot", async context =>
+            //     {
+            //         await context.Response.WriteAsync("Holaa desde my root");
+            //     });
+            // });
             app.UseWelcomePage();
             app.UseStatusMiddleWare();
             // app.Run(async context=>{
             //     await context.Response.WriteAsync("URL no encontrada");
             // });
+        }
+        IEdmModel GetEdmModel(){
+            var odataBuilder = new ODataConventionModelBuilder();
+            odataBuilder.EntitySet<User>("Users");
+
+            return odataBuilder.GetEdmModel();
         }
     }
 }
