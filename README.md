@@ -25,3 +25,8 @@ dotnet publish -c release
 dotnet publish -c release -r win-x64 --output ./../publish
 dotnet publish -c release -r linux-x64 --output ./publish
 ```
+## Docker
+```
+docker build -t webapi .
+docker run -p 88:80 webapi
+```
