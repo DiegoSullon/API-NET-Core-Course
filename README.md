@@ -1,5 +1,6 @@
 # API-NET-Core-Course
-# Dependencies(nuget gallery)
+## Dependencies(nuget gallery)
+```
 jwt
 ef
 ef in memory
@@ -13,7 +14,13 @@ ef sql server
 dotnet ef database update
 Swashbuckle.AspNetCore.Swagger 
 odata.net core
-#publish
+
+```
+
+## Publish
+
+```
 dotnet publish
 dotnet publish -c release
 dotnet publish -c release -r win-x64 --output ./../publish
+```
