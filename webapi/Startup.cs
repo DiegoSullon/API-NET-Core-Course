@@ -111,7 +111,10 @@ namespace WebApplication1
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                // app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/error");
+            }else{
+                app.UseExceptionHandler("/error");
             }
 
             // app.UseCors("MyPolicy");

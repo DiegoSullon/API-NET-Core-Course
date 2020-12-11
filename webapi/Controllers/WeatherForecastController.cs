@@ -26,6 +26,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            throw new Exception("Exception test");
             var rng = new Random();
             _logger.LogInformation("GET WeatherForecast");
             var lst = Enumerable.Range(1, 5).Select(index => new WeatherForecast
