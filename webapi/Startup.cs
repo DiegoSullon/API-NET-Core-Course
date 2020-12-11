@@ -63,23 +63,25 @@ namespace WebApplication1
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
+            }).AddJwtBearer(options =>
+            {
 
-                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                    {
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateLifetime =  true,
-                        ValidIssuer = "",
-                        ValidAudience = "",
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
-                        ValidateIssuerSigningKey= true
-                    };
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateLifetime = true,
+                    ValidIssuer = "",
+                    ValidAudience = "",
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateIssuerSigningKey = true
+                };
             });
-            // services.AddDbContext<ApiAppContext>(options =>
-            //     options.UseInMemoryDatabase("AppDB"));
             services.AddDbContext<ApiAppContext>(options =>
-                options.UseSqlServer(@"Data Source=DESKTOP-FV5LUU9\SQLEXPRESS;Initial Catalog=EDteamApi;Integrated Security=SSPI;"));
+                options.UseInMemoryDatabase("AppDB"));
+            // services.AddDbContext<ApiAppContext>(options =>
+            //     options.UseSqlServer(@"Data Source=DESKTOP-FV5LUU9\SQLEXPRESS;Initial Catalog=EDteamApi;Integrated Security=SSPI;"));
+
             services.AddResponseCaching();
             services.AddSwaggerGen(c =>
             {
@@ -113,7 +115,9 @@ namespace WebApplication1
             {
                 // app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/error");
-            }else{
+            }
+            else
+            {
                 app.UseExceptionHandler("/error");
             }
 
@@ -152,10 +156,11 @@ namespace WebApplication1
 
             app.UseAuthorization();
 
-            app.UseMvc(routeBuilder =>{
+            app.UseMvc(routeBuilder =>
+            {
                 routeBuilder.Expand().Select().OrderBy().Filter();
                 routeBuilder.EnableDependencyInjection();
-                routeBuilder.MapODataServiceRoute("odata","odata",GetEdmModel());
+                routeBuilder.MapODataServiceRoute("odata", "odata", GetEdmModel());
             });
 
             // app.UseEndpoints(endpoints =>
@@ -173,7 +178,8 @@ namespace WebApplication1
             //     await context.Response.WriteAsync("URL no encontrada");
             // });
         }
-        IEdmModel GetEdmModel(){
+        IEdmModel GetEdmModel()
+        {
             var odataBuilder = new ODataConventionModelBuilder();
             odataBuilder.EntitySet<User>("Users");
 
