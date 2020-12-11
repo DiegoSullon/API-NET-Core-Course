@@ -23,4 +23,5 @@ odata.net core
 dotnet publish
 dotnet publish -c release
 dotnet publish -c release -r win-x64 --output ./../publish
+dotnet publish -c release -r linux-x64 --output ./publish
 ```
